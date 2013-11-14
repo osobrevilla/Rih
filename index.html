@@ -15,11 +15,9 @@
         <script src='ResponsiveImageHandler.js'></script>
         <script src='js/current-src.js'></script>
         <script type="text/javascript">
-            // ResponsiveImageHandler.js is based on the work of Koen Vendrik
-            // see (https://github.com/kvendrik/responsive-images.js)
             onDomReady(function(){
-                var allImages = document.getElementsByClassName('responsive');
-                var handler = new ResponsiveImageHandler(allImages);
+                var allResponsiveImages = getElementsByClassName(document, 'responsive');
+                var handler = new ResponsiveImageHandler(allResponsiveImages);
                 handler.init();
             });
         </script>
@@ -27,10 +25,11 @@
     <body>
         
         <img alt="kitten!"
-            class="responsive",
+            class="responsive" 
             data-src-base="images/"
             data-src-base2x="images/retina/"
             data-src="<480:smallest.jpg, <768:small.jpg, <960:medium.jpg, >960:big.jpg" />
+        
         <noscript><img alt="kitten!" src="images/medium.jpg" /></noscript>
 
     </body>

@@ -1,12 +1,14 @@
-var ResponsiveImageHandler = (function (window, document) {
+var ResponsiveImageHandler = (function (window, document, $) {
 
-	if (!Object.keys) Object.keys = function(o) {
-	  if (o !== Object(o))
-	    throw new TypeError('Object.keys called on a non-object');
-	  var k=[],p;
-	  for (p in o) if (Object.prototype.hasOwnProperty.call(o,p)) k.push(p);
-	  return k;
-	};
+    if (!Object.keys) Object.keys = function (o) {
+        if (o !== Object(o))
+            throw new TypeError('Object.keys called on a non-object');
+        var k = [],
+            p;
+        for (p in o)
+            if (Object.prototype.hasOwnProperty.call(o, p)) k.push(p);
+        return k;
+    };
 
     var isRetina = window.devicePixelRatio ? window.devicePixelRatio >= 1.2 ? 1 : 0 : 0,
         hasAttr = function () {
@@ -18,36 +20,36 @@ var ResponsiveImageHandler = (function (window, document) {
             };
         }(),
 
-     Handler = function(images) {
-        var that = this,
-            delay = null,
-            i = null,
-            resize = function () {
-                clearTimeout(delay);
-                delay = setTimeout(function () {
-                    that._updateViewPortWidth();
-                    that._resize();
-                },25);
-            };
-        this.viewPortWidth = this._updateViewPortWidth();
-        this.images = [].slice.call(images, 0);
-        this.list = [];
+        Handler = function (images) {
+            var that = this,
+                delay = null,
+                i = null,
+                resize = function () {
+                    clearTimeout(delay);
+                    delay = setTimeout(function () {
+                        that._updateViewPortWidth();
+                        that._resize();
+                    }, 25);
+                };
+            this.viewPortWidth = this._updateViewPortWidth();
+            this.images = [].slice.call(images, 0);
+            this.list = [];
 
-        for (i in this.images)
-            this.addResponsiveImage(this.images[i]);
-        if ("addEventListener" in window) {
-            window.addEventListener('resize', resize, false);
-        } else {
-            window.attachEvent('onresize', resize);
-        }
-    };
+            for (i in this.images)
+                this.addResponsiveImage(this.images[i]);
+            if ("addEventListener" in window) {
+                window.addEventListener('resize', resize, false);
+            } else {
+                window.attachEvent('onresize', resize);
+            }
+        };
 
     Handler.prototype = {
 
         constructor: Handler,
 
-        init: function(){
-        	this._resize();
+        init: function () {
+            this._resize();
         },
 
         addResponsiveImage: function (img) {
@@ -79,8 +81,7 @@ var ResponsiveImageHandler = (function (window, document) {
             for (i in this.list) {
                 obj = this.list[i];
 
-                _condLoop:
-                for (var c in cond) {
+                _condLoop: for (var c in cond) {
 
                     var sizes = Object.keys(obj[cond[c]]).sort(this._sort);
 
@@ -88,7 +89,7 @@ var ResponsiveImageHandler = (function (window, document) {
 
                         if (cond[c] == '<') {
 
-                        	prevValue = sizes[s] * 1;
+                            prevValue = sizes[s] * 1;
                             nextValue = sizes[s - 1] ? sizes[s - 1] * 1 : undefined;
 
                             change = nextValue === undefined ?
@@ -97,7 +98,7 @@ var ResponsiveImageHandler = (function (window, document) {
 
                         } else {
 
-                        	prevValue = sizes[s] * 1;
+                            prevValue = sizes[s] * 1;
                             nextValue = sizes[s + 1] ? sizes[s + 1] * 1 : undefined;
 
                             change = nextValue === undefined ?
@@ -117,7 +118,7 @@ var ResponsiveImageHandler = (function (window, document) {
             }
         },
 
-        _regExpRules: /([<|>][^,]+)/g,
+        _regExpRules: /([\<|\>][^,]+)/g,
 
         _parse: function (img) {
 
@@ -126,11 +127,11 @@ var ResponsiveImageHandler = (function (window, document) {
                 rules,
                 chunks,
                 obj = {
-	                img: img,
-	                base: '',
-	                '<': {},
-	                '>': {}
-	            };
+                    img: img,
+                    base: '',
+                    '<': {},
+                    '>': {}
+                };
 
             srcAttrName = isRetina && hasAttr(img, 'data-src2x') ?
                 'data-src2x' : 'data-src';
@@ -144,8 +145,8 @@ var ResponsiveImageHandler = (function (window, document) {
             obj.base = img.getAttribute(baseAttrName) || '';
             rules = img.getAttribute(srcAttrName).match(this._regExpRules);
 
-            for (var r in rules) {
-                var chunks = rules[r].substr(1).split(':');
+            for (var r = 0; r < rules.length; r+=1) {
+                var chunks = rules[r].substring(1).split(':');
                 if (rules[r].indexOf('<') !== -1) {
                     obj['<'][chunks[0]] = chunks[1];
                 } else if (rules[r].indexOf('>') !== -1) {
@@ -163,5 +164,14 @@ var ResponsiveImageHandler = (function (window, document) {
 
     };
 
+    // to jQUery Plugin
+    if ($) {
+        $.fn.extend({
+            ResponsiveImageHandler: function(){
+                return new ResponsiveImageHandler(this.toArray());
+            }
+        });
+    }
+
     return Handler;
-}(window, window.document));
+}(window, window.document, window.jQuery));
