@@ -1,4 +1,4 @@
-# Rih.JS
+# Rih.js
 ###### Responsive Image Handler
 
 
@@ -9,7 +9,7 @@ It works the same way but with a completely rewritten core and add a cache syste
 
 ##### 1. Add the rih.js in html head tag or where you like!
 
-    <script src="rih.js"></script>
+    <script src="Rih.js"></script>
 
 ##### 1. Config markup
 
@@ -31,7 +31,6 @@ It works the same way but with a completely rewritten core and add a cache syste
         var allResponsiveImages = getElementsByClassName(document, 'responsive');
         var rih = new Rih(allResponsiveImages);
         rih.init();
-        
     </script>
 
 ##### API
