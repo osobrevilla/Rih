@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name='viewport' content='width=device-width'>
+        <title>ResponsiveImageHandler.js</title>
+        <style type="text/css">
+        * {padding: 0; margin: 0; }
+        body {font: 18px 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; }
+        img {width: 100%; max-width: 100%; }
+        article {position: relative; }
+        #current-src {top: 0; right: 0; position: absolute; float: right; font-size: .8em; color: #fff; background: #000; opacity: .7; padding: 12px 15px; }
+        </style>
+        <script src='js/domready.js'></script>
+        <script src='ResponsiveImageHandler.js'></script>
+        <script src='js/current-src.js'></script>
+        <script type="text/javascript">
+            // ResponsiveImageHandler.js is based on the work of Koen Vendrik
+            // see (https://github.com/kvendrik/responsive-images.js)
+            onDomReady(function(){
+                var allImages = document.getElementsByClassName('responsive');
+                var handler = new ResponsiveImageHandler(allImages);
+                handler.init();
+            });
+        </script>
+    </head>
+    <body>
+        
+        <img alt="kitten!"
+            class="responsive",
+            data-src-base="images/"
+            data-src-base2x="images/retina/"
+            data-src="<480:smallest.jpg, <768:small.jpg, <960:medium.jpg, >960:big.jpg" />
+        <noscript><img alt="kitten!" src="images/medium.jpg" /></noscript>
+
+    </body>
+</html>
