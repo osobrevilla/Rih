@@ -6,10 +6,12 @@
         <title>Rih.js - Responsive Image Handler</title>
         <style type="text/css">
         * {padding: 0; margin: 0; }
-        body {font: 18px 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; }
+        body {font: 100%/1.5 Arial, Helvetica, sans-serif; color: #333;  }
         img {width: 100%; max-width: 100%; }
+        p.picinfo   {background: #111; color: #4B4B4B; padding: 0.2em 1em;text-transform:uppercase; font-size:10px; }
+        p.picinfo a { color:#547E77; text-decoration:none; }
         article {position: relative; }
-        #current-src {top: 0; right: 0; position: absolute; float: right; font-size: .8em; color: #fff; background: #000; opacity: .7; padding: 12px 15px; }
+        #current-src {top: 0; right: 0; position: absolute; float: right; font-size: 1em; color: #fff; background: #000; opacity: .7; padding: 12px 15px; }
         </style>
         <script src='js/domready.js'></script>
         <script src='js/Rih.js'></script>
@@ -23,7 +25,7 @@
         </script>
     </head>
     <body>
-        <p><small>Photo by: <a href="http://www.flickr.com/photos/rayyathevet/">Rayya The Vet</a></smal></p>
+        <p class="picinfo">Photo by: <a href="http://www.flickr.com/photos/rayyathevet/">Rayya The Vet</a></p>
         <img alt="Puppy!"
             class="responsive" 
             data-src-base="images/"
