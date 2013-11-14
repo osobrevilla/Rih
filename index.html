@@ -17,15 +17,14 @@
         <script type="text/javascript">
             onDomReady(function(){
                 var allResponsiveImages = getElementsByClassName(document, 'responsive');
-                var handler = new Rih(allResponsiveImages);
-                handler.init();
+                var rih = new Rih(allResponsiveImages);
+                rih.init();
             });
         </script>
     </head>
     <body>
         
-        <img alt="kitten!"
-            class="responsive" 
+        <img class="responsive" 
             data-src-base="images/"
             data-src-base2x="images/retina/"
             data-src="<480:smallest.jpg, <768:small.jpg, <960:medium.jpg, >960:big.jpg" />
