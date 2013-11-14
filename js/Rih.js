@@ -145,7 +145,7 @@ var Rih = (function (window, document, $) {
             obj.base = img.getAttribute(baseAttrName) || '';
             rules = img.getAttribute(srcAttrName).match(this._regExpRules);
 
-            for (var r = 0; r < rules.length; r+=1) {
+            for (var r = 0; r < rules.length; r += 1) {
                 var chunks = rules[r].substring(1).split(':');
                 if (rules[r].indexOf('<') !== -1) {
                     obj['<'][chunks[0]] = chunks[1];
@@ -167,7 +167,7 @@ var Rih = (function (window, document, $) {
     // to jQUery Plugin
     if ($) {
         $.fn.extend({
-            Rih: function(){
+            Rih: function () {
                 return new Rih(this.toArray());
             }
         });
