@@ -14,14 +14,14 @@ It works the same way but with a completely rewritten core and add a cache syste
 ##### 1. Config markup
 
 
-     <img alt="kitten!" 
+     <img alt="Puppy!" 
         class="responsive" 
         data-src-base="images/"
         data-src-base2x="images/retina/"
         data-src="<480:smallest.jpg, <768:small.jpg, <960:medium.jpg, >960:big.jpg" />
         
 
-    <noscript><img alt="kitten!" src="images/medium.jpg" /></noscript>
+    <noscript><img alt="Puppy!" src="images/medium.jpg" /></noscript>
 
 
 ##### Run
