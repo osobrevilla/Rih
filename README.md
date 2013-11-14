@@ -1,7 +1,4 @@
-ReponsiveImageHandler
-=====================
+# ReponsiveImageHandler.JS
 
-Responsive images replacement
 
-// ResponsiveImageHandler.js is based on the work of Koen Vendrik
-// see (https://github.com/kvendrik/responsive-images.js)
+This helper is based on the tag sintax conditinal used in the work of [Koen Vendrik](https://github.com/kvendrik/responsive-images.js). It works the same way but with a completely rewritten core and cache system to make it much faster and responsive nonblocking.
