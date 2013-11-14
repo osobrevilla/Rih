@@ -31,5 +31,9 @@ It works the same way but with a completely rewritten core and add a cache syste
         var allResponsiveImages = getElementsByClassName(document, 'responsive');
         var rih = new Rih(allResponsiveImages);
         rih.init();
+        
     </script>
 
+##### API
+
+* Rih.addImage(imgNode)
