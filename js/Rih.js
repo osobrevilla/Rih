@@ -1,8 +1,15 @@
+/*!
+ * Rih.js v0.1 ~ Copyright (c) 2013
+ * Oscar Sobrevilla oscar.sobrevilla@gmail.com
+ * Released under MIT license
+ */
+
+/** @expose*/
 var Rih = (function (window, document, $) {
 
     if (!Object.keys) Object.keys = function (o) {
         if (o !== Object(o))
-            throw new TypeError('Object.keys called on a non-object');
+            throw 'Object.keys called on a non-object';
         var k = [],
             p;
         for (p in o)
@@ -19,6 +26,14 @@ var Rih = (function (window, document, $) {
                 return el.getAttribute(attr) !== null;
             };
         }(),
+            
+            
+    /**
+     * Rih Class
+     * @param {NodeList} images
+     * @constructor
+     * @expose
+     */
 
         Rih = function (images) {
             var that = this,
@@ -38,20 +53,22 @@ var Rih = (function (window, document, $) {
             for (i in this.images)
                 this.addImage(this.images[i]);
             if ("addEventListener" in window) {
-                window.addEventListener('resize', resize, false);
+                addEventListener('resize', resize, false);
             } else {
-                window.attachEvent('onresize', resize);
+                attachEvent('onresize', resize);
             }
         };
 
     Rih.prototype = {
 
         constructor: Rih,
-
+        
+        /** @expose*/
         init: function () {
             this._resize();
         },
-
+        
+        /** @expose*/
         addImage: function (img) {
             var res = this._parse(img);
             if (res) this.list.push(res);
@@ -145,7 +162,7 @@ var Rih = (function (window, document, $) {
             obj.base = img.getAttribute(baseAttrName) || '';
             rules = img.getAttribute(srcAttrName).match(this._regExpRules);
 
-            for (var r = 0; r < rules.length; r+=1) {
+            for (var r = 0; r < rules.length; r += 1) {
                 var chunks = rules[r].substring(1).split(':');
                 if (rules[r].indexOf('<') !== -1) {
                     obj['<'][chunks[0]] = chunks[1];
@@ -167,11 +184,12 @@ var Rih = (function (window, document, $) {
     // to jQUery Plugin
     if ($) {
         $.fn.extend({
-            Rih: function(){
+            /** @expose*/
+            Rih: function () {
                 return new Rih(this.toArray());
             }
         });
     }
 
     return Rih;
-}(window, window.document, window.jQuery));
+}(window, document, jQuery));
