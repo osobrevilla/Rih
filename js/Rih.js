@@ -1,8 +1,15 @@
-var Rih = (function (window, document, $) {
+/*!
+ * Rih.js v0.1 ~ Copyright (c) 2013
+ * Oscar Sobrevilla oscar.sobrevilla@gmail.com
+ * Released under MIT license
+ */
 
-    if (!Object.keys) Object.keys = function (o) {
+/** @expose */
+Rih = (function(window, document, $) {
+
+    if (!Object.keys) Object.keys = function(o) {
         if (o !== Object(o))
-            throw new TypeError('Object.keys called on a non-object');
+            throw 'Object.keys called on a non-object';
         var k = [],
             p;
         for (p in o)
@@ -10,56 +17,79 @@ var Rih = (function (window, document, $) {
         return k;
     };
 
+    if (!Object.create) {
+        Object.create = (function(){
+            function F(){}
+
+            return function(o){
+                if (arguments.length != 1) {
+                    throw new Error('Object.create implementation only accepts one parameter.');
+                }
+                F.prototype = o
+                return new F()
+            }
+        })()
+    }
+
     var isRetina = window.devicePixelRatio ? window.devicePixelRatio >= 1.2 ? 1 : 0 : 0,
-        hasAttr = function () {
+        hasAttr = function() {
             return ("hasAttribute" in document.documentElement) ?
-                function (el, attr) {
+                function(el, attr) {
                     return el.hasAttribute(attr);
-            } : function (el, attr) {
+            } : function(el, attr) {
                 return el.getAttribute(attr) !== null;
             };
-        }(),
+        }();
 
-        Rih = function (images) {
-            var that = this,
-                delay = null,
-                i = null,
-                resize = function () {
-                    clearTimeout(delay);
-                    delay = setTimeout(function () {
-                        that._updateViewPortWidth();
-                        that._resize();
-                    }, 25);
-                };
-            this.viewPortWidth = this._updateViewPortWidth();
-            this.images = [].slice.call(images, 0);
-            this.list = [];
 
-            for (i in this.images)
-                this.addImage(this.images[i]);
-            if ("addEventListener" in window) {
-                window.addEventListener('resize', resize, false);
-            } else {
-                window.attachEvent('onresize', resize);
-            }
-        };
+    /**
+     * Rih Class
+     * @param {NodeList} images
+     * @constructor
+     */
 
-    Rih.prototype = {
+    function Rih(images) {
+        var that = this,
+            delay = null,
+            i = null,
+            resize = function() {
+                clearTimeout(delay);
+                delay = setTimeout(function() {
+                    that._updateViewPortWidth();
+                    that._resize();
+                }, 25);
+            };
+        this.viewPortWidth = this._updateViewPortWidth();
+        this.images = [].slice.call(images, 0);
+        this.list = [];
+
+        for (i in this.images)
+            this.addImage(this.images[i]);
+        if ("addEventListener" in window) {
+            addEventListener('resize', resize, false);
+        } else {
+            attachEvent('onresize', resize);
+        }
+    }
+
+    Rih.prototype =  Object.create({
 
         constructor: Rih,
 
-        init: function () {
+        /** @expose */
+        init: function() {
             this._resize();
         },
 
-        addImage: function (img) {
+        /** @expose */
+        addImage: function(img) {
             var res = this._parse(img);
             if (res) this.list.push(res);
         },
 
         _cond: ['<', '>'],
 
-        _sort: function (a, b) {
+        _sort: function(a, b) {
             if (a > b)
                 return 1;
             else if (a < b)
@@ -68,7 +98,7 @@ var Rih = (function (window, document, $) {
                 return 0;
         },
 
-        _resize: function () {
+        _resize: function() {
             var obj,
                 newSrc = '',
                 change = false,
@@ -120,7 +150,7 @@ var Rih = (function (window, document, $) {
 
         _regExpRules: /([\<|\>][^,]+)/g,
 
-        _parse: function (img) {
+        _parse: function(img) {
 
             var srcAttrName,
                 baseAttrName,
@@ -158,20 +188,21 @@ var Rih = (function (window, document, $) {
             return obj;
         },
 
-        _updateViewPortWidth: function () {
+        _updateViewPortWidth: function() {
             return this.viewPortWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
         }
 
-    };
+    });
 
     // to jQUery Plugin
     if ($) {
         $.fn.extend({
-            Rih: function () {
+            /** @expose */
+            Rih: function() {
                 return new Rih(this.toArray());
             }
         });
     }
 
     return Rih;
-}(window, window.document, window.jQuery));
+}(window, document, window['jQuery']));
