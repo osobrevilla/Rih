@@ -5,7 +5,7 @@
  */
 
 /** @expose*/
-var Rih = (function (window, document, $) {
+Rih = (function (window, document, $) {
 
     if (!Object.keys) Object.keys = function (o) {
         if (o !== Object(o))
