@@ -7,15 +7,15 @@
         <style type="text/css">
         * {padding: 0; margin: 0; }
         body {font: 100%/1.5 Arial, Helvetica, sans-serif; color: #333;  }
-        img {width: 100%; max-width: 100%; }
+        img {width: 100%; max-width: 100%; display:block}
         p.picinfo   {background: #111; color: #4B4B4B; padding: 0.2em 1em;text-transform:uppercase; font-size:10px; }
         p.picinfo a { color:#547E77; text-decoration:none; }
         article {position: relative; }
-        #current-src {top: 0; right: 0; position: absolute; float: right; font-size: 1em; color: #fff; background: #000; opacity: .7; padding: 12px 15px; }
+        #monitor {top: 0; right: 0; position: absolute; float: right; font-size: 1em; color: #fff; background: #000; opacity: .7; padding: 12px 15px; }
         </style>
-        <script src='js/domready.js'></script>
-        <script src='js/Rih.min.js'></script>
-        <script src='js/current-src.min.js'></script>
+        <script src="js/domready.js"></script>
+        <script src="js/Rih.min.js"></script>
+        <script src="js/monitor.js"></script>
         <script type="text/javascript">
             onDomReady(function(){
                 var allResponsiveImages = getElementsByClassName(document, 'responsive');
@@ -25,7 +25,9 @@
         </script>
     </head>
     <body>
-        <p class="picinfo">Photo by: <a href="http://www.flickr.com/photos/rayyathevet/">Rayya The Vet</a></p>
+        
+        <!-- markup config -->
+        
         <img alt="Puppy!"
             class="responsive" 
             data-src-base="images/"
@@ -33,5 +35,12 @@
             data-src="<480:smallest.jpg, <768:small.jpg, <960:medium.jpg, >960:big.jpg" />
         
         <noscript><img alt="Puppy!" src="images/medium.jpg" /></noscript>
+        
+        <!--/ markup config -->
+        
+        
+        
+        <!-- information -->
+        <p class="picinfo">Photo by: <a href="http://www.flickr.com/photos/rayyathevet/">Rayya The Vet</a></p>
     </body>
 </html>

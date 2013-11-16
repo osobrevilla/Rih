@@ -23,7 +23,7 @@ Rih = (function(window, document, $) {
 
             return function(o){
                 if (arguments.length != 1) {
-                    throw new Error('Object.create implementation only accepts one parameter.');
+                    throw 'Object.create implementation only accepts one parameter.';
                 }
                 F.prototype = o
                 return new F()
@@ -60,11 +60,11 @@ Rih = (function(window, document, $) {
                 }, 25);
             };
         this.viewPortWidth = this._updateViewPortWidth();
-        this.images = [].slice.call(images, 0);
-        this.list = [];
+        this.imgs = [].slice.call(images, 0);
+        this.lst = [];
 
-        for (i in this.images)
-            this.addImage(this.images[i]);
+        for (i in this.imgs)
+            this.addImage(this.imgs[i]);
         if ("addEventListener" in window) {
             addEventListener('resize', resize, false);
         } else {
@@ -84,7 +84,7 @@ Rih = (function(window, document, $) {
         /** @expose */
         addImage: function(img) {
             var res = this._parse(img);
-            if (res) this.list.push(res);
+            if (res) this.lst.push(res);
         },
 
         _cond: ['<', '>'],
@@ -108,8 +108,8 @@ Rih = (function(window, document, $) {
                 nextValue,
                 i = 0;
 
-            for (i in this.list) {
-                obj = this.list[i];
+            for (i in this.lst) {
+                obj = this.lst[i];
 
                 _condLoop: for (var c in cond) {
 
