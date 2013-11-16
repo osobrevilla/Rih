@@ -11,7 +11,7 @@ It works the same way but with a completely rewritten core and add a settings ca
 
     <script src="Rih.js"></script>
 
-##### 1. Config markup
+##### 2. Config markup
 
 
      <img alt="Puppy!" 
@@ -24,7 +24,7 @@ It works the same way but with a completely rewritten core and add a settings ca
     <noscript><img alt="Puppy!" src="images/medium.jpg" /></noscript>
 
 
-##### Run
+##### 2. Run
 
 
     <script>
@@ -33,6 +33,6 @@ It works the same way but with a completely rewritten core and add a settings ca
         rih.init();
     </script>
 
-##### API
+## API
 
 * Rih.addImage(imgNode)
