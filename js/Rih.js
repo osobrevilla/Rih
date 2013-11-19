@@ -65,11 +65,10 @@ Rih = (function(window, document, $) {
 
         for (i in this.imgs)
             this.addImage(this.imgs[i]);
-        if ("addEventListener" in window) {
-            addEventListener('resize', resize, false);
-        } else {
+        var addEvent = window.addEventListener;
+        addEvent ? 
+            addEvent('resize', resize, false): 
             attachEvent('onresize', resize);
-        }
     }
 
     Rih.prototype =  Object.create({
