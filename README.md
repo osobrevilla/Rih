@@ -3,7 +3,7 @@
 
 
 This helper is based on the tag sintax config used on the work of [Koen Vendrik](https://github.com/kvendrik/responsive-images.js). 
-It works the same way but with a completely rewritten core and add a cache system to make it much faster and responsive nonblocking.
+It works the same way but with a completely rewritten core and add a settings cache system to make it much faster and responsive nonblocking screen resize.
 
 ##How use
 
@@ -11,7 +11,7 @@ It works the same way but with a completely rewritten core and add a cache syste
 
     <script src="Rih.js"></script>
 
-##### 1. Config markup
+##### 2. Config markup
 
 
      <img alt="Puppy!" 
@@ -24,7 +24,7 @@ It works the same way but with a completely rewritten core and add a cache syste
     <noscript><img alt="Puppy!" src="images/medium.jpg" /></noscript>
 
 
-##### Run
+##### 3. Run
 
 
     <script>
@@ -33,6 +33,6 @@ It works the same way but with a completely rewritten core and add a cache syste
         rih.init();
     </script>
 
-##### API
+## API
 
 * Rih.addImage(imgNode)
