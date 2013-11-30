@@ -24,7 +24,7 @@ It works the same way but with a completely rewritten core and add a settings ca
     <noscript><img alt="Puppy!" src="images/medium.jpg" /></noscript>
 
 
-##### 2. Run
+##### 3. Run
 
 
     <script>
