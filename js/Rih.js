@@ -3,44 +3,44 @@
  * Oscar Sobrevilla oscar.sobrevilla@gmail.com
  * Released under MIT license
  */
-
 /** @expose */
-Rih = (function(window, document, $) {
+var Rih = (function (window, document, $) {
 
-    if (!Object.keys) Object.keys = function(o) {
+    var hasOwnProp = Object.prototype.hasOwnProperty;
+
+    if (!Object.keys) Object.keys = function (o) {
         if (o !== Object(o))
             throw 'Object.keys called on a non-object';
         var k = [],
             p;
         for (p in o)
-            if (Object.prototype.hasOwnProperty.call(o, p)) k.push(p);
+            if (hasOwnProp.call(o, p)) k.push(p);
         return k;
     };
 
     if (!Object.create) {
-        Object.create = (function(){
-            function F(){}
+        Object.create = (function () {
+            function F() {}
 
-            return function(o){
+            return function (o) {
                 if (arguments.length != 1) {
                     throw new Error('Object.create implementation only accepts one parameter.');
                 }
-                F.prototype = o
-                return new F()
-            }
-        })()
+                F.prototype = o;
+                return new F();
+            };
+        })();
     }
 
     var isRetina = window.devicePixelRatio ? window.devicePixelRatio >= 1.2 ? 1 : 0 : 0,
-        hasAttr = function() {
+        hasAttr = function () {
             return ("hasAttribute" in document.documentElement) ?
-                function(el, attr) {
+                function (el, attr) {
                     return el.hasAttribute(attr);
-            } : function(el, attr) {
+            } : function (el, attr) {
                 return el.getAttribute(attr) !== null;
             };
         }();
-
 
     /**
      * Rih Class
@@ -52,44 +52,46 @@ Rih = (function(window, document, $) {
         var that = this,
             delay = null,
             i = null,
-            resize = function() {
+            resize = function () {
                 clearTimeout(delay);
-                delay = setTimeout(function() {
-                    that._updateViewPortWidth();
+                delay = setTimeout(function () {
+                    that.viewPortWidth = that._getViewPortWidth();
                     that._resize();
                 }, 25);
             };
-        this.viewPortWidth = this._updateViewPortWidth();
+        this.viewPortWidth = this._getViewPortWidth();
         this.images = [].slice.call(images, 0);
         this.list = [];
 
-        for (i in this.images)
-            this.addImage(this.images[i]);
+        for (i in this.images) {
+            if (hasOwnProp.call(this.images, i))
+                this.addImage(this.images[i]);
+        }
         if ("addEventListener" in window) {
-            addEventListener('resize', resize, false);
+            window.addEventListener('resize', resize, false);
         } else {
-            attachEvent('onresize', resize);
+            window.attachEvent('onresize', resize);
         }
     }
 
-    Rih.prototype =  Object.create({
+    Rih.prototype = Object.create({
 
         constructor: Rih,
 
         /** @expose */
-        init: function() {
+        init: function () {
             this._resize();
         },
 
         /** @expose */
-        addImage: function(img) {
+        addImage: function (img) {
             var res = this._parse(img);
             if (res) this.list.push(res);
         },
 
         _cond: ['<', '>'],
 
-        _sort: function(a, b) {
+        _sort: function (a, b) {
             if (a > b)
                 return 1;
             else if (a < b)
@@ -98,7 +100,7 @@ Rih = (function(window, document, $) {
                 return 0;
         },
 
-        _resize: function() {
+        _resize: function () {
             var obj,
                 newSrc = '',
                 change = false,
@@ -109,48 +111,56 @@ Rih = (function(window, document, $) {
                 i = 0;
 
             for (i in this.list) {
-                obj = this.list[i];
 
-                _condLoop: for (var c in cond) {
+                if (hasOwnProp.call(this.list, i)) {
 
-                    var sizes = Object.keys(obj[cond[c]]).sort(this._sort);
+                    obj = this.list[i];
 
-                    for (var s = 0; s < sizes.length; s += 1) {
+                    _condLoop: for (var c in cond) {
 
-                        if (cond[c] == '<') {
+                        if (hasOwnProp.call(cond, c)) {
 
-                            prevValue = sizes[s] * 1;
-                            nextValue = sizes[s - 1] ? sizes[s - 1] * 1 : undefined;
+                            var sizes = Object.keys(obj[cond[c]]).sort(this._sort);
 
-                            change = nextValue === undefined ?
-                                viewPortWidth <= prevValue :
-                                viewPortWidth <= prevValue && viewPortWidth > nextValue;
+                            for (var s = 0; s < sizes.length; s += 1) {
 
-                        } else {
+                                if (cond[c] == '<') {
 
-                            prevValue = sizes[s] * 1;
-                            nextValue = sizes[s + 1] ? sizes[s + 1] * 1 : undefined;
+                                    prevValue = sizes[s] * 1;
+                                    nextValue = sizes[s - 1] ? sizes[s - 1] * 1 : undefined;
 
-                            change = nextValue === undefined ?
-                                viewPortWidth >= prevValue :
-                                viewPortWidth >= prevValue && viewPortWidth < nextValue;
+                                    change = nextValue === undefined ?
+                                        viewPortWidth <= prevValue :
+                                        viewPortWidth <= prevValue && viewPortWidth > nextValue;
+
+                                } else {
+
+                                    prevValue = sizes[s] * 1;
+                                    nextValue = sizes[s + 1] ? sizes[s + 1] * 1 : undefined;
+
+                                    change = nextValue === undefined ?
+                                        viewPortWidth >= prevValue :
+                                        viewPortWidth >= prevValue && viewPortWidth < nextValue;
+                                }
+
+                                if (change) {
+                                    newSrc = obj.base + obj[cond[c]][prevValue];
+                                    if (obj.img.src !== newSrc)
+                                        obj.img.setAttribute('src', newSrc);
+                                    break _condLoop;
+                                }
+                            }
+
                         }
 
-                        if (change) {
-                            newSrc = obj.base + obj[cond[c]][prevValue];
-                            if (obj.img.src !== newSrc)
-                                obj.img.setAttribute('src', newSrc);
-                            break _condLoop;
-                        }
                     }
-
                 }
             }
         },
 
-        _regExpRules: /([\<|\>][^,]+)/g,
+        _regExpRules: /([<|>][^,]+)/g,
 
-        _parse: function(img) {
+        _parse: function (img) {
 
             var srcAttrName,
                 baseAttrName,
@@ -176,7 +186,7 @@ Rih = (function(window, document, $) {
             rules = img.getAttribute(srcAttrName).match(this._regExpRules);
 
             for (var r = 0; r < rules.length; r += 1) {
-                var chunks = rules[r].substring(1).split(':');
+                chunks = rules[r].substring(1).split(':');
                 if (rules[r].indexOf('<') !== -1) {
                     obj['<'][chunks[0]] = chunks[1];
                 } else if (rules[r].indexOf('>') !== -1) {
@@ -188,8 +198,8 @@ Rih = (function(window, document, $) {
             return obj;
         },
 
-        _updateViewPortWidth: function() {
-            return this.viewPortWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        _getViewPortWidth: function () {
+            return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
         }
 
     });
@@ -198,11 +208,11 @@ Rih = (function(window, document, $) {
     if ($) {
         $.fn.extend({
             /** @expose */
-            Rih: function() {
+            Rih: function () {
                 return new Rih(this.toArray());
             }
         });
     }
 
     return Rih;
-}(window, document, window['jQuery']));
+}(window, document, window.jQuery));
