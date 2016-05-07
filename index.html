@@ -13,34 +13,48 @@
         article {position: relative; }
         #monitor {top: 0; right: 0; position: absolute; float: right; font-size: 1em; color: #fff; background: #000; opacity: .7; padding: 12px 15px; }
         </style>
-        <script src="js/domready.js"></script>
-        <script src="js/Rih.min.js"></script>
-        <script src="js/monitor.js"></script>
-        <script type="text/javascript">
-            onDomReady(function(){
-                var allResponsiveImages = getElementsByClassName(document, 'responsive');
-                var rih = new Rih(allResponsiveImages);
-                rih.init();
-            });
-        </script>
     </head>
     <body>
-        
+
         <!-- markup config -->
-        
+
         <img alt="Puppy!"
-            class="responsive" 
+            class="responsive"
             data-src-base="images/"
             data-src-base2x="images/retina/"
             data-src="<480:smallest.jpg, <768:small.jpg, <960:medium.jpg, >960:big.jpg" />
-        
+
         <noscript><img alt="Puppy!" src="images/medium.jpg" /></noscript>
-        
+
         <!--/ markup config -->
-        
-        
-        
+
+
+
         <!-- information -->
         <p class="picinfo">Photo by: <a href="http://www.flickr.com/photos/rayyathevet/">Rayya The Vet</a></p>
+
+
+        <script src="dist/rih.min.js"></script>
+        <script src="dist/demo.monitor.js"></script>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function(){
+
+                var allResponsiveImages = document.getElementsByClassName('responsive');
+                var rihInstance = new Rih(allResponsiveImages);
+                rihInstance.init();
+                // Is posibble add a image on the fly
+                // Example using jQuery:
+                // A block of html with a images loaded from the server usign ajax.
+                //
+                //  $.get('/page/02.html/', function(htmlString){
+                //    var $nodeHTML = $(htmlString);
+                //    $nodeHTML.find('img.responsive').each(function(){
+                //      rihInstance.addImage(this);
+                //    });
+                //    $(document.body).append($nodeHTML);
+                //  });
+
+            }, false);
+        </script>
     </body>
 </html>

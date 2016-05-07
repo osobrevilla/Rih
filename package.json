@@ -1,0 +1,29 @@
+{
+  "name": "rih",
+  "version": "0.0.1",
+  "description": "Responsive Image Handler (src attribute change)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:scripts": "uglifyjs --compress --mangle -- ./src/Rih.js > ./dist/rih.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osobrevilla/Rih.git"
+  },
+  "keywords": [
+    "Responsive",
+    "Image",
+    "HTML",
+    "IMG"
+  ],
+  "author": "Oscar Sobrevilla",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/osobrevilla/Rih/issues"
+  },
+  "homepage": "https://github.com/osobrevilla/Rih#readme",
+  "devDependencies": {
+    "uglify-js": "^2.6.2"
+  }
+}
