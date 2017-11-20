@@ -1,5 +1,5 @@
 /*!
- * Rih.js v0.1 ~ Copyright (c) 2013
+ * Rih.js v0.1
  * Oscar Sobrevilla oscar.sobrevilla@gmail.com
  * Released under MIT license
  */
